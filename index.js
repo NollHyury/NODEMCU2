@@ -37,10 +37,6 @@ app.use(require('./routes'));
 
 
 
-server.listen(80, () =>{
+server.listen(port, () =>{
     console.log(`socket rodando na porta 80`)
 });
-
-app.listen(port, () =>{
-    console.log(`API REST rodando na porta ${port}`)
-})
