@@ -38,5 +38,5 @@ app.use(require('./routes'));
 
 
 server.listen(port, () =>{
-    console.log(`socket rodando na porta 80`)
+    console.log(`socket rodando na porta ${port}`)
 });
