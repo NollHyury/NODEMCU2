@@ -10,8 +10,9 @@ function verification(sample){
 
 function variousDevices(arrayNames){
     let vectorReturn = [];
+    console.log(arrayNames)
     for(const element of arrayNames) {
-        Sample.findOne({deviceName : element.name}).sort('-createdAt').then(
+        Sample.findOne({deviceName : element}).sort('-createdAt').then(
             result =>{
                 vectorReturn.push(result);
             }
