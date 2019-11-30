@@ -12,6 +12,7 @@ function variousDevices(arrayNames){
     const vectorReturn = [];
     console.log(arrayNames)
     for(const element of arrayNames) {
+        console.log(element)
         Sample.findOne({deviceName : element}).sort('-createdAt').then(
             result =>{
                 return vectorReturn.push(result);
