@@ -12,4 +12,4 @@ const Sample = new Schema(
     }
 );
 
-module.exports = mongoose.model('Sample',Sample)
+module.exports = mongoose.model('Sample',Sample);
