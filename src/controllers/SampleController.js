@@ -9,13 +9,12 @@ function verification(sample){
 }
 
 function variousDevices(arrayNames){
-    let vectorReturn = [];
+    const vectorReturn = [];
     console.log(arrayNames)
     for(const element of arrayNames) {
         Sample.findOne({deviceName : element}).sort('-createdAt').then(
             result =>{
-                console.log(vectorReturn)
-                vectorReturn.push(result);
+                return vectorReturn.push(result);
             }
         )
     }
