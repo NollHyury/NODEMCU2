@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const Sample = new Schema(
     {
+        deviceName : String,
         temperature : Number,
         gas : Number,
         status: String,
