@@ -6,7 +6,12 @@ const UserController =  {
     LOGIN(req,res){
         UserService.Rules.Login(req.body).then(
             result =>{
+                if(result.status === 404){
+                    res.status(404)
+                }
                 res.json(result);
+                
+                
             }
         ).catch(
             err =>{

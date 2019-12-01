@@ -21,13 +21,20 @@ const SampleController = {
         return res.json(sample)
     },
 
+
     async getLasts(req,res){
-        let samples = await Sample.find({
-            deviceName : {
-                $in: req.body
-            }
-        }).sort('-createdAt').limit(req.body.length)
-        return res.json(samples);
+        const samples = []
+        for (let element of req.body) {
+            console.log(element);
+            samples.push(Sample.findOne({
+                deviceName : element
+            }).sort('-createdAt').then(r=>{
+                console.log(r);
+                return r
+            }))
+        }
+        console.log(samples)
+        return res.send(samples)
     },
 
 
