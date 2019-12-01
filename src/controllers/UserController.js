@@ -7,7 +7,7 @@ const UserController =  {
         UserService.Rules.Login(req.body).then(
             result =>{
                 if(result.status === 404){
-                   return res.status(404).json(result);
+                   return res.status(400).json(result);
                 }else{
                    return res.status(200).json(result);
                 }
