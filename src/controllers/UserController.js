@@ -47,6 +47,14 @@ const UserController =  {
         ).catch(
             err => res.status(404).json(err)
         )
+    },
+
+    async myDevicesHistory(req,res){
+        await UserService.Rules.getHistoryUnormal(req.params.id).then(
+            r=> res.json(r)
+        ).catch(
+            err => res.status(404).json(err)
+        )
     }
 
 }

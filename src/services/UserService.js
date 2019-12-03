@@ -10,8 +10,18 @@ async function oneSample(name){
         return r;
     })
     return sample
-    
 }
+
+async function SampleUnNormal(name){
+    const sample = await Sample.find({
+        deviceName : name,
+        status : "UnNormal"
+    }).sort('-createdAt').limit(10).then(r =>{
+        return r;
+    })
+    return sample
+}
+
 
 const loginPromise = (login, password)=>{
     return new Promise(
@@ -137,6 +147,23 @@ const UserService  = {
 
         removeDevice : async (id,alias)=>{
             return removeDevicePromise(id,alias);
+        },
+
+
+        getHistoryUnormal : async (id) =>{
+            return new Promise( async (resolve, reject) =>{
+                await UserModel.findOne({_id : id}).then(async user=>{
+                    const samplesUnNormals = []
+                    for (let element of user.devices) {
+                        samplesUnNormals.push({
+                            alias : element.alias,
+                            device : await SampleUnNormal(element.name)
+                            }
+                        )
+                    }
+                    resolve(samplesUnNormals)
+                }).catch(err=> reject(err))
+            })
         }
             
             
