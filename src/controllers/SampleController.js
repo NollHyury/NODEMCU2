@@ -9,6 +9,7 @@ function verification(sample){
 }
 
 
+
 const SampleController = {
 
     async getAll(req,res){
@@ -24,17 +25,10 @@ const SampleController = {
 
     async getLasts(req,res){
         const samples = []
-        for (let element of req.body) {
-            console.log(element);
-            samples.push(Sample.findOne({
-                deviceName : element
-            }).sort('-createdAt').then(r=>{
-                console.log(r);
-                return r
-            }))
+        for (let element of req.body.array) {
+            samples.push(await oneSample(element))
         }
-        console.log(samples)
-        return res.send(samples)
+        return res.json(samples)
     },
 
 

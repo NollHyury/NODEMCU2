@@ -1,6 +1,17 @@
 const UserModel = require('../models/User');
 const DeviceModel = require('../models/Device');
+const Sample = require('../models/Sample');
 
+
+async function oneSample(name){
+    const sample = await Sample.findOne({
+        deviceName : name
+    }).sort('-createdAt').then(r =>{
+        return r;
+    })
+    return sample
+    
+}
 
 const loginPromise = (login, password)=>{
     return new Promise(
@@ -32,10 +43,10 @@ const loginPromise = (login, password)=>{
 
 
 
-const addDevicePromisse = (userId,deviceName) =>{
+const addDevicePromisse =(userId,device) =>{
     return new Promise(
         (resolve,reject) =>{
-            DeviceModel.findOne({deviceName : deviceName})
+            DeviceModel.findOne({name : device.name})
             .then(result =>{
                 if(result === null){
                     reject(result)
@@ -43,7 +54,7 @@ const addDevicePromisse = (userId,deviceName) =>{
                 else{
                     UserModel.findByIdAndUpdate(
                         {_id:userId},
-                        {"$push":{"devices":deviceName}}
+                        {"$push":{"devices":device}}
                     ).then(
                         result =>{
                             resolve(result);
@@ -56,6 +67,8 @@ const addDevicePromisse = (userId,deviceName) =>{
         }
     )
 }
+
+
 
 const UserService  = {
     Rules : {
@@ -80,22 +93,38 @@ const UserService  = {
 
         addDevice : (body) => {
             let id = body.id;
-            let deviceName = body.deviceName;
-            return addDevicePromisse(id,deviceName)
+            let name = body.deviceName;
+            let alias = body.deviceAlias;
+            let device ={
+               alias,
+               name
+            } 
+            return addDevicePromisse(id,device)
         },
 
+        callInformationOfDevices: async (userId) => {
+            return new Promise(async (resolve,reject)=>{
+                await UserModel.findOne({_id : userId}).then(async user =>{
+                    const samples = []
+                    for (let element of user.devices) {
+                        samples.push(await oneSample(element.name))
+                    }
+                    resolve(samples);
+                }).catch(err=>{
+                    reject(err)
+                })
+            })
+        }
+            
+            
 
+        
 
         
 
 
-}        
+    }        
 
 } 
-    
-
 
 module.exports = UserService;
-
-
-
