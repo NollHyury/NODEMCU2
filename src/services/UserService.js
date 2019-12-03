@@ -69,6 +69,20 @@ const addDevicePromisse =(userId,device) =>{
 }
 
 
+const removeDevicePromise = (id,deviceAlias) => {
+    return new Promise((resolve,reject) => {
+        UserModel.findOneAndUpdate({
+            _id : id
+        },{"$pull":{"devices" : {alias : deviceAlias}}}).then(
+            r =>{
+                resolve(r)
+            }
+        ).catch(
+            err => reject(err)
+        )
+    })
+}
+
 
 const UserService  = {
     Rules : {
@@ -118,6 +132,11 @@ const UserService  = {
                     reject(err)
                 })
             })
+        },
+
+
+        removeDevice : async (id,alias)=>{
+            return removeDevicePromise(id,alias);
         }
             
             

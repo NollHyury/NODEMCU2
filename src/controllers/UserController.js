@@ -39,6 +39,14 @@ const UserController =  {
         }).catch(err=>{
             res.status(400).json(err);
         })
+    },
+
+    async REMOVEDEVICE(req,res){
+        await UserService.Rules.removeDevice(req.params.id,req.body.deviceAlias).then(
+            r => res.json(r)
+        ).catch(
+            err => res.status(404).json(err)
+        )
     }
 
 }
