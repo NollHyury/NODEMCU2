@@ -107,7 +107,11 @@ const UserService  = {
                 await UserModel.findOne({_id : userId}).then(async user =>{
                     const samples = []
                     for (let element of user.devices) {
-                        samples.push(await oneSample(element.name))
+                        samples.push({
+                            alias : element.alias,
+                            device : await oneSample(element.name)
+                        }
+                        )
                     }
                     resolve(samples);
                 }).catch(err=>{
