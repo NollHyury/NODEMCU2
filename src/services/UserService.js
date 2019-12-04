@@ -103,16 +103,12 @@ const UserService  = {
         },
         
         createUser : (user) => {
-            UserModel.create(user).then(
-                result =>{
-                    console.log(result)
-                    return result
-                }
-            ).catch(
-                err =>{
-                    res.json(err)
-                }
-            )
+            return new Promise((resolve,reject)=>{
+                UserModel.create(user).then(r=>{
+                    resolve(r)
+                }).catch(err => reject(err))
+            })
+                    
         },
 
         addDevice : (body) => {

@@ -20,7 +20,9 @@ const UserController =  {
     },
 
     async createUser(req, res){
-        res.json(UserService.Rules.createUser(req.body))
+        UserService.Rules.createUser(req.body).then( r =>
+            res.status(200).json(r)
+        ).catch(err => res.status(400).json(err))
     },
 
     async ADDDEVICE(req,res){
