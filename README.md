@@ -13,4 +13,4 @@
 
 # Objetivo
 
-API REST para trafegar os dados do projeto do arduino medidor de gas e temperatura.
+API REST para trafegar os dados do projeto do arduino medidor de gás e temperatura.
